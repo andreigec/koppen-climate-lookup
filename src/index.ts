@@ -1,5 +1,4 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import data from './koppen.csv?raw';
 
 interface KoppenPoint {
   latitude: number;
@@ -15,52 +14,46 @@ export class KoppenLookup {
   private data: KoppenPoint[] = [];
   private static instance: KoppenLookup | null = null;
 
-  private constructor() {}
+  private constructor() {
+    // Initialize immediately since we have static data
+    this.initialize();
+  }
 
   /**
-   * Get or create an initialized KoppenLookup instance
-   * @returns Promise that resolves to the initialized KoppenLookup instance
+   * Get KoppenLookup instance
    */
-  public static async getInstance(): Promise<KoppenLookup> {
+  public static getInstance(): KoppenLookup {
     if (!KoppenLookup.instance) {
       KoppenLookup.instance = new KoppenLookup();
-      await KoppenLookup.instance.initialize();
     }
     return KoppenLookup.instance;
   }
 
   /**
-   * Initialize the lookup with bundled CSV data
+   * Initialize the lookup with CSV data
    * @private
-   * @throws Error if file cannot be read or parsed
    */
-  private async initialize(): Promise<void> {
-    try {
-      const csvPath = path.join(__dirname, 'koppen.csv');
-      const fileContent = await fs.readFile(csvPath, 'utf-8');
-      const lines = fileContent.split('\n');
+  private initialize(): void {
+    const lines = data.split('\n');
       
-      // Skip header
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-        
-        const [lat, lon, koppenClass] = line.split(',');
-        if (!lat || !lon || !koppenClass) continue;
+    // Skip header
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      
+      const [lat, lon, koppenClass] = line.split(',');
+      if (!lat || !lon || !koppenClass) continue;
 
-        const latitude = parseFloat(lat);
-        const longitude = parseFloat(lon);
-        
-        if (isNaN(latitude) || isNaN(longitude)) continue;
+      const latitude = parseFloat(lat);
+      const longitude = parseFloat(lon);
+      
+      if (isNaN(latitude) || isNaN(longitude)) continue;
 
-        this.data.push({
-          latitude,
-          longitude,
-          koppenClass
-        });
-      }
-    } catch (error) {
-      throw new Error(`Failed to initialize KoppenLookup: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      this.data.push({
+        latitude,
+        longitude,
+        koppenClass
+      });
     }
   }
 

@@ -1,38 +1,36 @@
 {
     "name": "koppen-climate-lookup",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Look up Koppen climate classifications by latitude and longitude",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
+    "files": [
+      "dist"
+    ],
     "author": "Andrei Gec <@andreigec> (https://gec.dev/)",
     "repository": "github:andreigec/koppen-climate-lookup",
     "license": "ISC",
-    "files": [
-        "dist"
-    ],
     "scripts": {
-        "clean": "rimraf dist",
-        "build": "pnpm run clean && tsup src/index.ts --format cjs,esm --dts --clean && pnpm run copy-csv",
-        "copy-csv": "npx cpy src/koppen.csv dist/ --flat",
-        "type-check": "tsc --noEmit",
-        "test": "vitest run",
-        "test:watch": "vitest",
-        "prepublishOnly": "pnpm run build"
+      "clean": "rimraf dist",
+      "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+      "type-check": "tsc --noEmit",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "prepublishOnly": "pnpm run build"
     },
     "keywords": [
-        "koppen",
-        "climate",
-        "classification",
-        "geography",
-        "weather"
+      "koppen",
+      "climate",
+      "classification",
+      "geography",
+      "weather"
     ],
     "devDependencies": {
-        "@types/node": "^20.0.0",
-        "cpy-cli": "^5.0.0",
-        "rimraf": "^5.0.0",
-        "tsup": "^8.0.0",
-        "typescript": "^5.0.0",
-        "vitest": "^1.0.0"
+      "@types/node": "22.10.2",
+      "rimraf": "6.0.1",
+      "tsup": "8.3.5",
+      "typescript": "5.7.2",
+      "vitest": "2.1.8"
     }
-}
+  }
