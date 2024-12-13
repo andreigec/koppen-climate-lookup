@@ -1,0 +1,41 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.bracketPairColorization.enabled": true,
+		"editor.guides.bracketPairs": "active",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit"
+		},
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"files.exclude": {
+			"dist": true,
+			"**/.git": true,
+			"**/.DS_Store": true,
+			"**/node_modules": true,
+			"node_modules": true
+		}
+	},
+	  
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "node-terminal",
+				"name": "Debug Current Test File (npm run test)",
+				"request": "launch",
+				"command": "ts-node -- ${file}",
+				"cwd": "${fileDirname}"
+			  }
+		]
+	},"extensions": {
+		"recommendations": [
+		  "arcanis.vscode-zipfs",
+		  "dbaeumer.vscode-eslint"
+		]
+	  }
+	  
+}
